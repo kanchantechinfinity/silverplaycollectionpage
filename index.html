@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Silverplay — Ganpati Collection</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+/* ===== Silverplay.in exact theme tokens (captured from live site) ===== */
+:root{
+  --void:#2E1D11; --deep:#25201F; --stone:#372513; --navy:#372513;
+  --parchment:#E8D9BC; --linen:#E8D9BC; --ivory:#F4E8CC;
+  --text-1:#F4E8CC; --text-2:#E8D9BC; --text-3:#D8D5D2; --text-4:#B8860B;
+  --sepia:#c9a84c; --sepia-dark:#c9a84c;
+  --silver:#D4C4A0; --silver-dark:#D4C4A0;
+  --border:rgba(180,140,60,.18); --border-light:rgba(180,140,60,.35);
+  --border-sepia:rgba(180,140,80,.3); --border-parch:rgba(100,70,30,.2);
+  --mauve:#C4956A; --mauve-dark:#8B5E35;
+  --header-bg:#20160B; --nav-color:#E8D5B7;
+  --footer-bg:#20160B; --footer-border:rgba(184,134,11,.15);
+  --footer-text-color:#C8B090; --footer-link-color:#C8B090; --footer-link-hover:#E8D5B7;
+  --footer-title-color:#B8860B; --footer-bottom-color:#C8B090;
+  --gold-btn:#8B6914; --gold-btn-hover:#7A5C10;
+  --font-display:'Cinzel', serif; --font-serif:'Cormorant Garamond', Georgia, serif;
+  --ease:cubic-bezier(.4,0,.2,1); --t-fast:.22s; --t-med:.45s; --t-slow:.8s;
+  --announce-h:36px; --header-h:90px; --total-h:126px;
+}
+html,body{margin:0;padding:0;background:var(--void);color:var(--ivory);overscroll-behavior:none;}
+body{font-family:var(--font-serif);}
+main>:first-child{margin-top:0 !important;}
+main>:last-child{margin-bottom:0 !important;}
+::-webkit-scrollbar{display:none;}
+.sp-container{max-width:1400px;margin:0 auto;padding:0 2.5rem;}
+
+/* ---- Header (exact silverplay.in) ---- */
+.sp-header{position:sticky;top:0;left:0;right:0;height:var(--header-h);z-index:1000;background:var(--header-bg);backdrop-filter:blur(28px);border-bottom:1px solid rgba(180,140,60,.14);}
+.sp-header__accent-line{height:1px;background:linear-gradient(to right,transparent 0%,rgba(184,134,11,.4) 20%,rgba(184,134,11,.7) 50%,rgba(184,134,11,.4) 80%,transparent 100%);position:absolute;bottom:0;left:0;right:0;pointer-events:none;}
+.sp-header__inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:100%;padding:0 2.5rem;max-width:1400px;margin:0 auto;}
+.sp-nav{display:flex;align-items:center;gap:2rem;}
+.sp-nav--right{justify-content:flex-end;gap:1.5rem;}
+.sp-nav a,.sp-nav-btn{font-family:var(--font-display);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--nav-color);background:none;border:none;transition:color var(--t-med) var(--ease);white-space:nowrap;cursor:pointer;display:flex;align-items:center;gap:.3rem;min-height:44px;padding:0;text-decoration:none;}
+.sp-nav a:hover,.sp-nav-btn:hover{color:var(--ivory);}
+.sp-nav__dropdown{position:relative;}
+.sp-nav__dropdown-toggle{font-family:var(--font-display);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--nav-color);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:.3rem;min-height:44px;transition:color var(--t-med) var(--ease);}
+.sp-nav__dropdown-toggle:hover{color:var(--ivory);}
+.sp-nav__dropdown-menu{position:absolute;top:calc(100% + .75rem);left:50%;transform:translateX(-50%);background:#1a1007;border:1px solid rgba(184,134,11,.15);padding:.75rem 0;min-width:196px;opacity:0;pointer-events:none;transition:opacity var(--t-med) var(--ease);z-index:100;}
+.sp-nav__dropdown:hover .sp-nav__dropdown-menu{opacity:1;pointer-events:all;}
+.sp-nav__dropdown-menu a{padding:.65rem 1.4rem;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:var(--font-display);color:#C8B090;min-height:40px;display:flex;align-items:center;}
+.sp-nav__dropdown-menu a:hover{color:var(--sepia);padding-left:1.8rem;}
+.sp-header__logo{display:flex;flex-direction:column;align-items:center;gap:.2rem;}
+.sp-header__logo-img{height:70px;width:auto;object-fit:contain;}
+.sp-header__logo-name{font-family:var(--font-display);font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--silver-dark);}
+.sp-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px;min-width:44px;min-height:44px;justify-content:center;}
+.sp-hamburger span{display:block;width:22px;height:1px;background:#E8D5B7;}
+.sp-nav-btn svg{color:#E8D5B7;}
+
+/* ---- Announcement bar ---- */
+.sp-announce{background:#0A0603;color:#C8B090;border-bottom:1px solid rgba(184,134,11,.18);padding:.5rem 2.5rem;text-align:center;overflow-x:auto;white-space:nowrap;}
+.sp-announce p{font-size:11px;font-family:var(--font-display);letter-spacing:.22em;text-transform:uppercase;margin:0;display:flex;align-items:center;justify-content:center;gap:.75rem;}
+
+/* ---- Buttons (exact silverplay.in) ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.85rem 2rem;min-height:44px;font-family:var(--font-display);font-size:11px;letter-spacing:.32em;text-transform:uppercase;border:1px solid transparent;cursor:pointer;transition:background var(--t-med) var(--ease),border-color var(--t-med) var(--ease),color var(--t-med) var(--ease),transform var(--t-med) var(--ease);white-space:nowrap;line-height:1;text-decoration:none;}
+.btn:hover{transform:translateY(-1px);}
+.btn-gold{background:var(--gold-btn);color:#fff;border-color:var(--gold-btn);}
+.btn-gold:hover{background:var(--gold-btn-hover);border-color:var(--gold-btn-hover);color:#fff;}
+.btn-outline{background:transparent;color:#E8D5B7;border-color:rgba(184,134,11,.4);}
+.btn-outline:hover{background:rgba(184,134,11,.08);border-color:#B8860B;color:var(--ivory);}
+
+/* ---- Product Card (exact silverplay.in) ---- */
+.sp-products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.15rem;}
+.sp-product-card{display:block;transition:transform var(--t-slow) var(--ease);}
+.sp-product-card:hover{transform:translateY(-4px);}
+.sp-product-card__img-wrap{position:relative;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--border-parch);margin-bottom:.85rem;transition:border-color var(--t-slow) var(--ease);background:var(--linen);}
+.sp-product-card:hover .sp-product-card__img-wrap{border-color:var(--sepia);}
+.sp-product-card__img{width:100%;height:100%;object-fit:cover;transition:transform var(--t-slow) var(--ease);display:block;}
+.sp-product-card:hover .sp-product-card__img{transform:scale(1.06);}
+.sp-product-card__wishlist{position:absolute;top:.75rem;right:.75rem;background:rgba(28,18,8,.55);border:1px solid var(--border);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--silver-dark);transition:color var(--t-fast),background var(--t-fast);}
+.sp-product-card__wishlist:hover{color:var(--mauve);background:rgba(28,18,8,.88);}
+.sp-product-card__badge{position:absolute;top:.75rem;left:.75rem;display:flex;flex-direction:column;gap:.3rem;z-index:2;}
+.sp-product-card__badge span{padding:.2rem .55rem;font-family:var(--font-display);font-size:9px;letter-spacing:.14em;text-transform:uppercase;}
+.sp-product-card__cat{font-family:var(--font-display);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#9E8B6E;margin:0 0 .28rem;}
+.sp-product-card__name{font-family:var(--font-serif);font-size:1.05rem;font-weight:400;color:var(--ivory);margin:0 0 .38rem;line-height:1.3;}
+.sp-product-card__price{font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--sepia);display:flex;align-items:baseline;gap:.5rem;}
+.sp-product-card__compare{font-size:.78rem;color:#8A7060;text-decoration:line-through;font-weight:400;}
+.sp-product-card__off{margin-left:auto;font-size:9px;letter-spacing:.08em;color:var(--sepia);}
+.sp-product-card__img-link,.sp-product-card__name-link{display:block;text-decoration:none;color:inherit;}
+.sp-product-card__atc-form{margin-top:12px;}
+.sp-product-card__atc-btn{width:100%;padding:10px 16px;background:transparent;color:#E8D5B7;font-family:var(--font-display);font-size:10px;letter-spacing:.15em;text-transform:uppercase;border:1px solid #E8D5B7;cursor:pointer;transition:background .2s,color .2s;opacity:.85;}
+.sp-product-card__atc-btn:hover{background:var(--sepia-dark);color:var(--void);border-color:var(--sepia-dark);opacity:1;}
+
+/* ---- Footer (exact silverplay.in) ---- */
+.sp-footer{position:relative;background:var(--footer-bg);border-top:1px solid var(--footer-border);padding:4.5rem 0 2.5rem;}
+.sp-footer__grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:3rem;margin-bottom:3.5rem;}
+.sp-footer__logo-img{max-height:48px;width:auto;object-fit:contain;display:block;margin-bottom:1.1rem;filter:brightness(0) invert(1) opacity(.85);}
+.sp-footer__tagline{font-family:var(--font-serif);font-style:italic;font-size:.95rem;color:var(--footer-text-color);line-height:1.8;max-width:230px;margin:0;}
+.sp-footer__col{display:flex;flex-direction:column;gap:.55rem;}
+.sp-footer__col-title{font-family:var(--font-display);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--footer-title-color);margin:0 0 .45rem;}
+.sp-footer__col a{font-family:var(--font-serif);font-size:.93rem;color:var(--footer-link-color);text-decoration:none;transition:color var(--t-med) var(--ease);min-height:30px;display:flex;align-items:center;}
+.sp-footer__col a:hover{color:var(--footer-link-hover);}
+.sp-footer__socials{display:flex;gap:.75rem;margin-top:.5rem;}
+.sp-footer__socials a{font-family:var(--font-display);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--footer-title-color);border:1px solid rgba(201,168,76,.28);padding:.55rem 1.1rem;min-height:38px;display:flex;align-items:center;background:rgba(201,168,76,.04);text-decoration:none;transition:color var(--t-fast),border-color var(--t-fast),background var(--t-fast);}
+.sp-footer__socials a:hover{color:var(--ivory);border-color:var(--sepia);background:rgba(201,168,76,.1);}
+.sp-footer__bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.75rem;border-top:1px solid rgba(184,134,11,.08);gap:1rem;flex-wrap:wrap;}
+.sp-footer__copy{font-family:var(--font-display);font-size:9px;letter-spacing:.2em;color:var(--footer-bottom-color);text-transform:uppercase;margin:0;}
+
+@media (max-width:1023px){ .sp-mega{display:none !important;} }
+@media (max-width:768px){
+  .sp-container{padding:0 1.25rem;}
+  .sp-nav--left,.sp-nav--right{display:none;}
+  .sp-hamburger{display:flex;}
+  .sp-header__inner{display:flex;justify-content:space-between;align-items:center;padding:0 1.25rem;gap:0;}
+  .sp-header__logo-img{max-height:56px;}
+  .sp-footer__grid{grid-template-columns:1fr;gap:2rem;}
+  .sp-footer__bottom{flex-direction:column;text-align:center;gap:.5rem;}
+  .sp-products-grid{grid-template-columns:repeat(2,1fr);gap:.75rem;}
+}
+
+/* ===== Page-specific styling (Ganpati Collection content) ===== */
+.gp-hero{position:relative;overflow:hidden;background:var(--void);border-bottom:1px solid var(--border-parch);}
+.gp-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1.1rem;border-radius:999px;border:1px solid rgba(184,134,11,.4);background:rgba(184,134,11,.1);color:var(--sepia);font-family:var(--font-display);font-size:10px;letter-spacing:.22em;text-transform:uppercase;}
+.gp-trust-card{display:flex;align-items:center;gap:.9rem;padding:1.1rem;border-radius:6px;background:#25190D;border:1px solid var(--border-parch);}
+.gp-trust-icon{width:44px;height:44px;border-radius:50%;background:rgba(184,134,11,.12);border:1px solid rgba(184,134,11,.3);display:flex;align-items:center;justify-content:center;color:var(--sepia);flex-shrink:0;}
+.gp-filter-btn{padding:.55rem 1.1rem;border-radius:4px;font-family:var(--font-display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;background:#25190D;color:#C8B090;border:1px solid var(--border-parch);cursor:pointer;transition:all .2s;}
+.gp-filter-btn.active,.gp-filter-btn:hover{background:var(--sepia);color:var(--void);border-color:var(--sepia);}
+.gp-faq-card{background:#25190D;border:1px solid var(--border-parch);border-radius:4px;overflow:hidden;}
+.gp-faq-toggle{width:100%;padding:1.15rem;display:flex;align-items:center;justify-content:space-between;text-align:left;background:none;border:none;cursor:pointer;color:var(--ivory);}
+.gp-faq-icon{transition:transform .2s;color:var(--sepia);}
+.gp-faq-icon.rot{transform:rotate(180deg);}
+
+/* ---- Logo text fallback (used if the remote logo image fails to load) ---- */
+.sp-header__logo-fallback{display:flex;flex-direction:column;align-items:center;line-height:1;}
+.sp-header__logo-fallback .mark{font-family:var(--font-display);font-size:22px;letter-spacing:.12em;color:var(--ivory);font-weight:600;}
+.sp-header__logo-fallback .sub{font-family:var(--font-display);font-size:8px;letter-spacing:.42em;text-transform:uppercase;color:var(--sepia);margin-top:2px;}
+.sp-footer__logo-fallback{display:flex;flex-direction:column;margin-bottom:1.1rem;line-height:1;}
+.sp-footer__logo-fallback .mark{font-family:var(--font-display);font-size:26px;letter-spacing:.12em;color:var(--ivory);font-weight:600;}
+.sp-footer__logo-fallback .sub{font-family:var(--font-display);font-size:8px;letter-spacing:.42em;text-transform:uppercase;color:var(--sepia);margin-top:3px;}
+
+/* ---- Scroll reveal animations ---- */
+.reveal{opacity:0;transition:opacity .9s cubic-bezier(.16,.8,.24,1),transform .9s cubic-bezier(.16,.8,.24,1);will-change:opacity,transform;}
+.reveal-left{transform:translateX(-60px);}
+.reveal-right{transform:translateX(60px);}
+.reveal-up{transform:translateY(40px);}
+.reveal.is-visible{opacity:1;transform:translate(0,0);}
+@media (prefers-reduced-motion: reduce){
+  .reveal{transition:none;opacity:1;transform:none;}
+}
+</style>
+</head>
+<body class="antialiased selection:bg-[var(--sepia)] selection:text-[var(--void)]">
+
+<!-- ===================== HEADER (exact markup from silverplay.in) ===================== -->
+<div class="sp-announce">
+  <p>✦ BIS CERTIFIED <span class="text-[rgba(184,134,11,.4)]">✦</span> SAVINGS WITH EVERY PURCHASE <span class="text-[rgba(184,134,11,.4)]">✦</span> THE SILVER PLAY EXCHANGE POLICY <span class="text-[rgba(184,134,11,.4)]">✦</span> 🇮🇳 ARTISAN CRAFTED IN INDIA <span class="text-[rgba(184,134,11,.4)]">✦</span> FREE SHIPPING ON PREPAID ORDERS</p>
+</div>
+
+<header class="sp-header" id="sp-header">
+  <div class="sp-header__accent-line"></div>
+  <div class="sp-header__inner">
+    <button class="sp-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+
+    <nav class="sp-nav sp-nav--left" aria-label="Primary navigation">
+      <a href="/collections/all">Treasury</a>
+      <div class="sp-nav__dropdown">
+        <button class="sp-nav__dropdown-toggle">Collections ▾</button>
+        <div class="sp-nav__dropdown-menu">
+          <a href="#">Earrings</a>
+          <a href="#collection-catalog" style="color:var(--sepia);font-weight:600;">Ganpati Collection</a>
+          <a href="#">Regal Pendants</a>
+          <a href="#">Men's Collection</a>
+          <a href="#">All Jewellery</a>
+        </div>
+      </div>
+      <a href="#collection-catalog">Regal Pendants</a>
+    </nav>
+
+    <a href="/" class="sp-header__logo" aria-label="Silver Play home">
+      <img class="sp-header__logo-img" src="https://silverplay.in/cdn/shop/files/SP_WHite_log_SHort.png?v=1779376096" alt="Silver Play" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+      <div class="sp-header__logo-fallback" style="display:none;"><span class="mark">SILVERPLAY</span><span class="sub">925 Sterling Silver</span></div>
+    </a>
+
+    <nav class="sp-nav sp-nav--right" aria-label="Secondary navigation">
+      <a href="#">About</a>
+      <a href="#">Journal</a>
+      <a href="#">Stone Guide</a>
+      <a href="#">Contact</a>
+      <button class="sp-nav-btn" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+      </button>
+      <a href="#" aria-label="Account">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </a>
+      <button aria-label="Cart" class="sp-nav-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        (0)
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="flex flex-col w-full">
+
+  <!-- Hero -->
+  <section class="gp-hero">
+    <div class="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full" style="background:rgba(184,134,11,.08);filter:blur(90px);pointer-events:none;"></div>
+    <div class="relative sp-container pt-10 pb-16 lg:pb-20">
+      <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase mb-10" style="color:rgba(232,213,183,.55);">
+        <a class="hover:text-[var(--sepia)]" href="#">Home</a><span style="color:rgba(184,134,11,.4)">/</span>
+        <a class="hover:text-[var(--sepia)]" href="#">Collections</a><span style="color:rgba(184,134,11,.4)">/</span>
+        <span style="color:var(--sepia);font-weight:600;">The Ganpati Collection</span>
+      </nav>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 flex flex-col items-start gap-5 reveal reveal-left">
+          <div class="gp-badge"><span class="material-symbols-outlined text-[15px]">stars</span> Divine Auspicious Collection</div>
+          <h1 class="font-normal" style="font-family:var(--font-display);font-size:44px;line-height:1.2;color:var(--ivory);">
+            Think Silver. Think Silver Play<br/><span class="italic" style="color:var(--sepia);font-family:var(--font-serif);">— The Ganpati Collection</span>
+          </h1>
+          <p class="text-[18px] leading-relaxed max-w-xl" style="font-family:var(--font-serif);color:#C8B090;">
+            Handcrafted in pure 925 Hallmarked Sterling Silver. Forged in ancient karigari traditions for Vinayaka Sthapana &amp; auspicious home sanctification.
+          </p>
+          <div class="flex flex-wrap items-center gap-4 pt-3">
+            <a href="#collection-catalog" class="btn btn-gold">Explore The Collection</a>
+            <a href="#hamper-spotlight" class="btn btn-outline"><span class="material-symbols-outlined text-[18px] mr-2">redeem</span>Bespoke Hamper</a>
+          </div>
+        </div>
+        <div class="lg:col-span-6 relative reveal reveal-right">
+          <div class="relative rounded-lg overflow-hidden" style="border:1px solid var(--border-parch);box-shadow:0 12px 40px rgba(0,0,0,.8);">
+            <img alt="Pure 925 sterling silver Lord Ganesha idol and fluted modak" class="w-full h-auto object-cover max-h-[500px]" src="https://lh3.googleusercontent.com/aida/AEtjO1XILo90fl3sln-3yAJnr32arn7yevsvdOdAR5yHMgzEjmj5EXWPmTF94knvvmNTukocegYIKppN4nRE9oQp5ToX53KETz996gtDd5ao-IbppVGfrZtpb7cGJl9m3Wm-WDJcpTwYrVfCCxz-Vd1BBfwi09InlGqfIL5QVWCCTMOsdN6k2PH3LSNoJf2yin2_XGqGcSQi5XXgTEViw2A_eELJ0369jj7LTIkbJVnzGZlCjX0XCg_7YfQ_"/>
+            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3.5 rounded" style="background:rgba(32,22,11,.9);border:1px solid var(--border-parch);backdrop-filter:blur(6px);">
+              <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-[22px]" style="color:var(--sepia);">verified</span>
+                <div>
+                  <div class="text-[11px] font-semibold tracking-wider uppercase" style="color:var(--ivory);">925 BIS Laser Hallmarked</div>
+                  <div class="text-[10px]" style="color:#C8B090;">Every Murti &amp; Artifact Individually Assayed</div>
+                </div>
+              </div>
+              <span class="text-[11px] italic" style="color:var(--sepia);font-family:var(--font-serif);">Pure Fine Silver</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <section style="background:#25190D;border-bottom:1px solid var(--border-parch);">
+    <div class="sp-container py-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="gp-trust-card reveal reveal-left"><div class="gp-trust-icon"><span class="material-symbols-outlined text-[22px]">verified_user</span></div><div><h4 class="text-[11px] tracking-[0.2em] font-semibold uppercase m-0" style="color:var(--sepia);">100% 925 BIS Hallmarked</h4><p class="text-[12px] mt-0.5 m-0" style="color:#C8B090;">Assayed purity with digital QR certificate</p></div></div>
+        <div class="gp-trust-card reveal reveal-up"><div class="gp-trust-icon"><span class="material-symbols-outlined text-[22px]">temple_hindu</span></div><div><h4 class="text-[11px] tracking-[0.2em] font-semibold uppercase m-0" style="color:var(--sepia);">Pran Pratishtha Ready</h4><p class="text-[12px] mt-0.5 m-0" style="color:#C8B090;">Consecrated unboxing with sacred roli &amp; chandan</p></div></div>
+        <div class="gp-trust-card reveal reveal-up"><div class="gp-trust-icon"><span class="material-symbols-outlined text-[22px]">local_shipping</span></div><div><h4 class="text-[11px] tracking-[0.2em] font-semibold uppercase m-0" style="color:var(--sepia);">Insured Express Delivery</h4><p class="text-[12px] mt-0.5 m-0" style="color:#C8B090;">Guaranteed arrival before Ganesh Sthapana</p></div></div>
+        <div class="gp-trust-card reveal reveal-right"><div class="gp-trust-icon"><span class="material-symbols-outlined text-[22px]">currency_exchange</span></div><div><h4 class="text-[11px] tracking-[0.2em] font-semibold uppercase m-0" style="color:var(--sepia);">Lifetime Silver Card</h4><p class="text-[12px] mt-0.5 m-0" style="color:#C8B090;">Assured net weight exchange across Silver Play</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalog -->
+  <section class="sp-container py-16" id="collection-catalog">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 pb-6" style="border-bottom:1px solid var(--border-parch);">
+      <div class="flex flex-col gap-1.5 reveal reveal-left">
+        <span class="text-[11px] tracking-[0.26em] uppercase font-semibold" style="color:var(--sepia);">Devotional Karigari</span>
+        <h2 class="font-normal m-0" style="font-family:var(--font-display);font-size:34px;color:var(--ivory);">Auspicious Sacred Silver Artifacts</h2>
+        <p class="text-[13px] max-w-xl m-0" style="color:#C8B090;">Authentic 925 hallmark creations for ceremonial sthapana, personal worship, and cherished festive gifts.</p>
+      </div>
+      <div class="text-[12px] tracking-wider uppercase reveal reveal-right" style="color:#C8B090;"><span class="font-bold" style="color:var(--sepia);">28</span> Consecrated Pieces In Stock</div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-4 p-3 rounded mb-10" style="background:#25190D;border:1px solid var(--border-parch);">
+      <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto" id="filter-pills">
+        <button class="gp-filter-btn active" type="button">All Pieces (28)</button>
+        <button class="gp-filter-btn" type="button">Silver Idols (8)</button>
+        <button class="gp-filter-btn" type="button">Pooja Thalis (6)</button>
+        <button class="gp-filter-btn" type="button">Solid Silver Modaks (5)</button>
+        <button class="gp-filter-btn" type="button">Silver Coins (4)</button>
+      </div>
+      <div class="flex items-center gap-3 w-full lg:w-auto justify-end">
+        <label class="text-[11px] tracking-widest uppercase" style="color:#C8B090;" for="sort-select">Sort By:</label>
+        <select id="sort-select" class="text-[12px] px-3 py-1.5 rounded cursor-pointer" style="background:#25190D;border:1px solid var(--border-parch);color:var(--ivory);">
+          <option>Featured Bestsellers</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Weight: Heavy to Light</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products (exact sp-product-card component) -->
+    <div class="sp-products-grid">
+      <!-- 1 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:var(--sepia);color:var(--void);">Bestseller</span></div>
+            <img class="sp-product-card__img" alt="Siddhivinayak Ganesha Idol" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMwkEuNg6URZKLMAbGvXf39E-6AU_-R-41apnfnRELd5wTqsOrrLIEHsbwH21dVmEac8-fHE7hIMv21IjYVa2kk5BNpOe_6f49iBMxC7T_9erk2iqPffGAGVmxSj56OGW3pbna0JRCISTRsMsfchgTTUQ50kZedeycSdK7awx4w0uXAs4Fa-Z0_XbEaT9F2E8cO79f_t_KPg0UhPnIjOTxUPWWBfcLqrOA6aL3gl4Wd9Xn2qxSOU0"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Pooja Murti • 75g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Siddhivinayak Ganesha Idol</p></a>
+          <p class="sp-product-card__price">₹9,499 <span class="sp-product-card__compare">₹11,200</span><span class="sp-product-card__off">15% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+      <!-- 2 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:#8B5E35;color:#F4E8CC;">Festive Exclusive</span></div>
+            <img class="sp-product-card__img" alt="Artisan Solid Silver Modak" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmRbU3tum-OZgzhf8oYixuVH-SlH_hbz-ZSqhXOwAY1MVEk6F1N_TWsc91ouFLB0CElFQSFWA5mumwTAIbxV8dt-7-HLFcqv47iKkkYfyCU7p7WYvoTwfmdGhFgf3fAxPQOrwEtoxITVFvEej3tRkqbD_c17cSd7JM2UcD4cg9HFgAmkacZPg6NgwOTczPGL6fr43hDEDuZKyC1lV-f5OuwU6amB5YfiM45ASBkied0ApUyoLXi-s"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Sacred Naivedya • 35g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Artisan Solid Silver Modak</p></a>
+          <p class="sp-product-card__price">₹4,299 <span class="sp-product-card__compare">₹4,999</span><span class="sp-product-card__off">14% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+      <!-- 3 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:var(--sepia);color:var(--void);">Limited Batch</span></div>
+            <img class="sp-product-card__img" alt="Royal 5-Piece Pooja Thali Set" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5cFsojAfeNi20Y8DZ_fo1bUxrl__S8IriPJvo0KbMTQo8TOlJD5onQpxGYtaDjTzCc_FdP8U13o9crbF3DGk6n7hukLNdZ2_8RUuWuixk9_IFYGzch16NcSnYvJ6u7XJQ92_6JsEEwjEp1EaWGzGu-9tn32zDUj84e3AEB-gvleqeCPNpM5sdTp1mrtiH-r_KnvjAN7wtSMS7RQCWbAMidp7MzkEpJFXq_E67TpTxj3zMmnTv2Us"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Ceremonial Aarti • 140g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Royal Pooja Thali Set</p></a>
+          <p class="sp-product-card__price">₹16,999 <span class="sp-product-card__compare">₹19,500</span><span class="sp-product-card__off">13% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+      <!-- 4 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:var(--sepia);color:var(--void);">Trending</span></div>
+            <img class="sp-product-card__img" alt="Ganesha Pendant &amp; Box Chain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwL3oOQMzYieKOAqgi_iguR2x-fuFcmCNIQFE9ReaCxlj8RPNfAwmOHfz_beSRy8Atp6Datfx8k37LoqNUlf2KYGNLLx-XUp-yBMl7xKrHVXn4IamFk4uS5Lwd9iVEBkYVGQTQUfPn45zIZYnPHh0-7bXx3m1TBHgxKECp7dJeOmuPeO2aidvfxvlv7JiDJQdLL7DDgcfpYa-Kw436fP3uXjpsSAvqIYEFsn1WNuW6lssA06yvMwU"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Sacred Wear • 18g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Ganesha Pendant &amp; Chain</p></a>
+          <p class="sp-product-card__price">₹2,899 <span class="sp-product-card__compare">₹3,499</span><span class="sp-product-card__off">17% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+      <!-- 5 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:var(--sepia);color:var(--void);">Auspicious</span></div>
+            <img class="sp-product-card__img" alt="Ganesha Charan Silver Coin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJlz-u8t15hrR1rUydx3Y20E8sCV_srC4qzDa1fG8aaA4VVCK5nrQvJ_iIePTJd8AJ3jHm3tlTg7mOJgLTrZyvrrvVB7NBmFF0i7VHYxVjMlEsN57f78nukIISSpVhOLPFx9BKy8-wcVnwfXvwhJmlWM_vNM_r33-_cL8P4H1yFqZHkmB6lZraSKJyGmvECQtJQfReoEFryqSvH5o-vSX1Rmm23ZVHTbtSgT6PHAUKB-IE8yggrdQ"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Shubh Coin • 20g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Ganesha Charan Silver Coin</p></a>
+          <p class="sp-product-card__price">₹2,499 <span class="sp-product-card__compare">₹2,999</span><span class="sp-product-card__off">16% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+      <!-- 6 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:var(--sepia);color:var(--void);">Gift Favorite</span></div>
+            <img class="sp-product-card__img" alt="Divine Trunk Silver Ring" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd5S5RQqaztX-6ajQK7OSkV0ygJhcwZgGNrNxrpwjcurHC7UmegvNudyKBVWr14Bx1wgeO0CiJaAv951QRnTykLYovzDv-_HoAJJAJc3tyaq80b-WJMDmSd7HrBBWHa62iAgMboG_ku4GXmiA5G7FMHYvZ7PFgf_uF40yM9ZS8DyQ0yegYS5nkfyH_F05LJeSfc0N46ZKgkDFLtxULAiv7lgnA59A8srnhcBQmwml3zpBvDG2Y8WY"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Fine Ring • 8g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Divine Trunk Silver Ring</p></a>
+          <p class="sp-product-card__price">₹1,999 <span class="sp-product-card__compare">₹2,399</span><span class="sp-product-card__off">16% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+      <!-- 7 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:var(--sepia);color:var(--void);">Sacred Light</span></div>
+            <img class="sp-product-card__img" alt="Shree Ganesh Silver Diya Pair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApY8buG98mNQNUXX-YeetE8VHPaZ-DLaJ_xNHDQyLMm0I4xa-SqbNsgfC039hYLGWa9HjOdoMSGArTCRlDlmYZvPheQHE7JzRjtjfEO7qOf1J2TaxOSQmVXG3euS_DOh4RCXXY4nkpqRRaU19evmfD-1n9Wtft6y5r6HlyWPccL-YcmTbOfIicqbQURc4XfajZXndOAmFXc3VEYf2c7FP0Bm2gSSvVX0OMfoNYONJVEF245-NUt6Q"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Pooja Diya • 60g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Shree Ganesh Silver Diya Pair</p></a>
+          <p class="sp-product-card__price">₹6,799 <span class="sp-product-card__compare">₹7,999</span><span class="sp-product-card__off">15% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+      <!-- 8 -->
+      <div class="sp-product-card reveal reveal-up">
+        <a href="#" class="sp-product-card__img-link">
+          <div class="sp-product-card__img-wrap">
+            <div class="sp-product-card__badge"><span style="background:var(--sepia);color:var(--void);">Collector Edition</span></div>
+            <img class="sp-product-card__img" alt="Ashtavinayak Gold-Gilded Idol" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW9Kzp6hMZS-jAhJXHtKf3yQ8nlAGv3RkQl0aatwSP0ZegG_4Sr3-gjLvE0XGAFWyyhwpDwVnihMbh5JjBNs0YbfjgduYoALDNoQc0AtNr5ZZJmgtaelwdkXNuMCe_T7PLK917ylIJeZ36USmXbVDLR-e0JL1ja7s_iFgVE883r9L7hVv9lmQKXMb4w-c4IcSXilv989HI9i5phU1Z9cGR6etqJ5PxfLWjjzFKNGrpE7XzloLeWkQ"/>
+            <button class="sp-product-card__wishlist" aria-label="Save"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path></svg></button>
+          </div>
+        </a>
+        <div>
+          <p class="sp-product-card__cat">Masterwork • 110g</p>
+          <a href="#" class="sp-product-card__name-link"><p class="sp-product-card__name">Ashtavinayak Gold-Gilded Idol</p></a>
+          <p class="sp-product-card__price">₹14,499 <span class="sp-product-card__compare">₹16,500</span><span class="sp-product-card__off">12% OFF</span></p>
+          <form class="sp-product-card__atc-form"><button type="submit" class="sp-product-card__atc-btn">Add to Bag</button></form>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center justify-center mt-12 gap-3">
+      <p class="text-[12px] tracking-wider" style="color:#C8B090;">Showing 8 of 28 Auspicious Idols &amp; Artifacts</p>
+      <div class="w-48 h-1 rounded-full overflow-hidden" style="background:#25190D;border:1px solid var(--border-parch);"><div class="w-1/3 h-full" style="background:var(--sepia);"></div></div>
+      <button class="btn btn-outline" type="button">Load More Creations</button>
+    </div>
+  </section>
+
+  <!-- Bespoke Hamper -->
+  <section style="background:#25190D;border-top:1px solid var(--border-parch);border-bottom:1px solid var(--border-parch);" class="py-20" id="hamper-spotlight">
+    <div class="sp-container">
+      <div class="relative rounded-xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12" style="background:var(--void);border:1px solid rgba(184,134,11,.3);">
+        <div class="lg:col-span-7 p-8 lg:p-14 flex flex-col justify-between relative z-10 reveal reveal-left">
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+              <span class="px-2.5 py-1 text-[10px] font-bold tracking-[0.2em] uppercase" style="background:var(--sepia);color:var(--void);">Festive Bespoke Curation</span>
+              <span class="text-[10px] tracking-[0.24em] uppercase" style="color:rgba(184,134,11,.8);">Limited Edition 2026</span>
+            </div>
+            <h2 class="font-normal leading-tight m-0" style="font-family:var(--font-display);font-size:36px;color:var(--ivory);">The Bespoke Bappa Utsav Hamper</h2>
+            <p class="text-[16px] leading-relaxed" style="font-family:var(--font-serif);color:#C8B090;">Curated for ceremonial housewarmings and revered family blessings. Each bespoke case arrives complete with consecrated ingredients ready for immediate Vinayaka Pratishthapana.</p>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 text-[13px] list-none p-0 m-0" style="color:var(--ivory);">
+              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]" style="color:var(--sepia);">check_circle</span>Custom 925 Silver Ganesha Murti</li>
+              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]" style="color:var(--sepia);">check_circle</span>Handcrafted Solid Silver Modak</li>
+              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]" style="color:var(--sepia);">check_circle</span>Crimson Velvet Keepsake Vault</li>
+              <li class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]" style="color:var(--sepia);">check_circle</span>Sanctified Temple Roli &amp; Akshat</li>
+              <li class="flex items-center gap-2 sm:col-span-2"><span class="material-symbols-outlined text-[18px]" style="color:var(--sepia);">check_circle</span>Handwritten Gold-Inscribed Personalized Blessing Card</li>
+            </ul>
+          </div>
+          <div class="flex flex-wrap items-baseline gap-6 pt-8 mt-6" style="border-top:1px solid var(--border-parch);">
+            <div class="flex flex-col">
+              <span class="text-[10px] tracking-[0.24em] uppercase" style="color:#C8B090;">Festive Offering Price</span>
+              <span class="font-medium" style="font-family:var(--font-display);font-size:26px;color:var(--sepia);">Starting at ₹12,999</span>
+            </div>
+            <button class="btn btn-gold" type="button">Personalize Gift Hamper</button>
+          </div>
+        </div>
+        <div class="lg:col-span-5 relative min-h-[380px] lg:min-h-full reveal reveal-right">
+          <img alt="Luxury Velvet Gift Box with 925 Silver Idol" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClifaOh9Jtge6_7SLQ9hS4AorA_JCu1i3cfjsZhf6ptmfHb5lZdOIh_CcDPny9wAtdChwty7w5dyRYP_cnsNQhVap1zF6FU21RcCtix0jPLpoLKe-xvXfEHokgc8khUZ73-cpxcB_igzWI2Yj99Mysvfx2KpV4MsgebIDpie-QkL9OxVkm95M3NUCNOQx_d-rxXICymvJDc5cj2Bd8_WyJGeyB0JkAd6jnkjyyOKXgm25cKlW3INA"/>
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(32,22,11,.6),transparent);"></div>
+          <div class="absolute bottom-4 right-4 px-3 py-1.5 rounded flex items-center gap-1.5 text-[10px] tracking-wider uppercase" style="background:rgba(32,22,11,.9);border:1px solid var(--border-parch);color:var(--sepia);">
+            <span class="material-symbols-outlined text-[14px]">verified</span>Includes BIS Certificate of Authenticity
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="sp-container py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-7 p-8 lg:p-12 rounded shadow-xl relative reveal reveal-left" style="background:#25190D;border:1px solid var(--border-parch);">
+        <span class="material-symbols-outlined text-[44px]" style="color:rgba(184,134,11,.3);">format_quote</span>
+        <div class="flex items-center gap-1 my-3" style="color:var(--sepia);">
+          <span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
+        </div>
+        <p class="italic leading-relaxed" style="font-family:var(--font-serif);font-size:21px;color:var(--ivory);">"The finish of the 925 silver Ganesha murti is breathtaking. It arrived in secure velvet packaging just two days before Vinayaka Chaturthi with full hallmark papers. Our home temple feels truly blessed."</p>
+        <div class="flex items-center justify-between pt-6 mt-4" style="border-top:1px solid var(--border-parch);">
+          <div class="flex flex-col">
+            <span class="font-medium" style="font-family:var(--font-display);font-size:16px;color:var(--sepia);">Ananya R. Deshmukh</span>
+            <span class="text-[11px] tracking-wider uppercase" style="color:#C8B090;">Pune, Maharashtra</span>
+          </div>
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded text-[10px] tracking-widest uppercase" style="background:var(--void);border:1px solid var(--border-parch);color:var(--sepia);"><span class="material-symbols-outlined text-[14px]">verified</span>Verified Pooja Ready</div>
+        </div>
+      </div>
+      <div class="lg:col-span-5 flex flex-col gap-6 reveal reveal-right">
+        <div class="flex flex-col gap-2">
+          <span class="text-[11px] tracking-[0.24em] uppercase font-semibold" style="color:var(--sepia);">Uncompromising Reverence</span>
+          <h3 class="font-normal m-0" style="font-family:var(--font-display);font-size:28px;color:var(--ivory);">Sanctity Sealed in Pure Silver</h3>
+          <p class="text-[13px] leading-relaxed" style="color:#C8B090;">Each artifact is fashioned according to Shilpa Shastra proportions, ensuring balanced spiritual iconography and generational durability.</p>
+        </div>
+        <div class="grid grid-cols-3 gap-4 pt-2">
+          <div class="flex flex-col p-4 rounded text-center" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">50,000+</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">Idols Delivered</span></div>
+          <div class="flex flex-col p-4 rounded text-center" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">100%</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">BIS Hallmarked</span></div>
+          <div class="flex flex-col p-4 rounded text-center" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">4.9/5</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">Trust Rating</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background:#25190D;border-top:1px solid var(--border-parch);" class="py-20">
+    <div class="max-w-[840px] mx-auto px-6 flex flex-col gap-10">
+      <div class="text-center flex flex-col gap-2 reveal reveal-up">
+        <span class="text-[11px] tracking-[0.24em] uppercase font-semibold" style="color:var(--sepia);">Reassurance &amp; Delivery</span>
+        <h2 class="font-normal m-0" style="font-family:var(--font-display);font-size:32px;color:var(--ivory);">Frequently Asked Questions</h2>
+        <p class="text-[13px] m-0" style="color:#C8B090;">Silver authentication, doorstep delivery timelines, and ceremonial purity.</p>
+      </div>
+      <div class="flex flex-col gap-3" id="faq-accordion">
+        <div class="gp-faq-card reveal reveal-up"><button class="gp-faq-toggle" type="button"><span style="font-family:var(--font-serif);font-size:18px;">How long does delivery take?</span><span class="material-symbols-outlined gp-faq-icon rot">expand_more</span></button><div class="px-5 pb-5"><p class="text-[13px] leading-relaxed m-0" style="color:#C8B090;">All festival orders are routed through prioritized air express couriers with comprehensive transit insurance. Orders are typically dispatched within 24 hours, with guaranteed delivery within 2–4 business days, well before the Vinayaka Sthapana muhurat.</p></div></div>
+        <div class="gp-faq-card reveal reveal-up"><button class="gp-faq-toggle" type="button"><span style="font-family:var(--font-serif);font-size:18px;">What is the return policy?</span><span class="material-symbols-outlined gp-faq-icon">expand_more</span></button><div class="px-5 pb-5 hidden"><p class="text-[13px] leading-relaxed m-0" style="color:#C8B090;">We offer a 7-day hassle-free return and exchange window on all undamaged idols and silver jewellery. Additionally, our Lifetime Silver Exchange guarantee lets you trade in any 925 hallmarked piece at prevailing silver market rates.</p></div></div>
+        <div class="gp-faq-card reveal reveal-up"><button class="gp-faq-toggle" type="button"><span style="font-family:var(--font-serif);font-size:18px;">How do I care for my silver jewellery?</span><span class="material-symbols-outlined gp-faq-icon">expand_more</span></button><div class="px-5 pb-5 hidden"><p class="text-[13px] leading-relaxed m-0" style="color:#C8B090;">Store your silver in the airtight anti-tarnish pouch provided with your order. Avoid direct contact with harsh chemical perfumes, excessive chlorine, and moisture. Clean gently using the specialized microfibre polishing cloth included in every box.</p></div></div>
+        <div class="gp-faq-card reveal reveal-up"><button class="gp-faq-toggle" type="button"><span style="font-family:var(--font-serif);font-size:18px;">Why is silver called sterling silver?</span><span class="material-symbols-outlined gp-faq-icon">expand_more</span></button><div class="px-5 pb-5 hidden"><p class="text-[13px] leading-relaxed m-0" style="color:#C8B090;">Sterling silver contains exactly 92.5% pure silver and 7.5% strengthening alloys (traditionally copper), making it the global standard (925) for high-durability fine jewelry and heirloom idols that never bend or lose intricate sculptural detail over time.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<!-- ===================== FOOTER (exact markup from silverplay.in) ===================== -->
+<footer class="sp-footer">
+  <div class="sp-container">
+    <div class="sp-footer__grid">
+      <div>
+        <img class="sp-footer__logo-img" src="https://silverplay.in/cdn/shop/files/SP_WHite_log_SHort.png?v=1779376096" alt="Silver Play" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+        <div class="sp-footer__logo-fallback" style="display:none;"><span class="mark">SILVERPLAY</span><span class="sub">925 Sterling Silver</span></div>
+        <p class="sp-footer__tagline">Handcrafted sterling silver jewellery, forged in the ancient tradition.</p>
+      </div>
+      <div class="sp-footer__col">
+        <p class="sp-footer__col-title">Explore</p>
+        <a href="#">All Jewellery</a><a href="#">Earrings</a><a href="#collection-catalog">Regal Pendants</a><a href="#">Journal</a>
+      </div>
+      <div class="sp-footer__col">
+        <p class="sp-footer__col-title">Care &amp; Policy</p>
+        <a href="#">Jewellery Care</a><a href="#">Shipping Policy</a><a href="#">Returns &amp; Refunds</a><a href="#">FAQs</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a>
+      </div>
+      <div class="sp-footer__col">
+        <p class="sp-footer__col-title">Connect</p>
+        <a href="#">Contact Us</a><a href="#">Our Story</a>
+        <div class="sp-footer__socials"><a href="https://www.instagram.com/thesilverplay/" target="_blank" rel="noopener">In</a><a href="http://facebook.com/thesilverplay" target="_blank" rel="noopener">Fb</a></div>
+      </div>
+    </div>
+    <div class="sp-footer__bottom">
+      <p class="sp-footer__copy">© 2026 Silver Play. All rights reserved.</p>
+      <p class="sp-footer__copy">Crafted with devotion in India · Curated By Dalljiet Kaur</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-triggered fade/slide reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          setTimeout(() => el.classList.add('is-visible'), i * 60);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  }
+
+  document.querySelectorAll('#filter-pills .gp-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#filter-pills .gp-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.gp-faq-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const card = toggle.closest('.gp-faq-card');
+      const content = card.querySelector('div.px-5');
+      const icon = card.querySelector('.gp-faq-icon');
+      const isHidden = content.classList.contains('hidden');
+      document.querySelectorAll('.gp-faq-card').forEach(c => { c.querySelector('div.px-5').classList.add('hidden'); c.querySelector('.gp-faq-icon').classList.remove('rot'); });
+      if (isHidden) { content.classList.remove('hidden'); icon.classList.add('rot'); }
+    });
+  });
+</script>
+</body>
+</html>
