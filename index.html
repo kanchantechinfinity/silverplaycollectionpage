@@ -176,9 +176,219 @@ main>:last-child{margin-bottom:0 !important;}
 @media (prefers-reduced-motion: reduce){
   .reveal{transition:none;opacity:1;transform:none;}
 }
+
+/* ============================================================================
+   HERITAGE ORNAMENTATION LAYER  (purely additive - added, never replaced)
+   Ancient-Indian detailing: lotus flourishes, temple medallions, jaali
+   lattice screens, paisley corner vines, manuscript framing.
+   Ground rules honoured here:
+     - no new colours: every stroke is var(--sepia) / rgba(184,134,11,*)
+     - no font, button, product-card, section or spacing changes
+     - every ornament is aria-hidden + pointer-events:none
+     - nothing may overflow its section (no horizontal scroll)
+   ========================================================================== */
+:root{
+  --orn-ink:var(--sepia);
+  /* jaali (temple lattice screen) - seamless 52px tile */
+  --orn-jaali:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 52 52'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='.8'%3E%3Ccircle cx='0' cy='0' r='18'/%3E%3Ccircle cx='52' cy='0' r='18'/%3E%3Ccircle cx='0' cy='52' r='18'/%3E%3Ccircle cx='52' cy='52' r='18'/%3E%3Ccircle cx='26' cy='26' r='18'/%3E%3Cpath d='M26 8 44 26 26 44 8 26Z'/%3E%3C/g%3E%3C/svg%3E");
+  /* mandala watermark - concentric lotus rings */
+  --orn-mandala:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1'%3E%3Ccircle cx='100' cy='100' r='97' stroke-dasharray='1.5 10'/%3E%3Ccircle cx='100' cy='100' r='88'/%3E%3Ccircle cx='100' cy='100' r='83' stroke-dasharray='3 7'/%3E%3Ccircle cx='100' cy='100' r='41'/%3E%3Ccircle cx='100' cy='100' r='14'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z' transform='rotate(45 100 100)'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z' transform='rotate(90 100 100)'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z' transform='rotate(135 100 100)'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z' transform='rotate(180 100 100)'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z' transform='rotate(225 100 100)'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z' transform='rotate(270 100 100)'/%3E%3Cpath d='M100 28C110 42 110 50 100 60 90 50 90 42 100 28Z' transform='rotate(315 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(22.5 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(67.5 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(112.5 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(157.5 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(202.5 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(247.5 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(292.5 100 100)'/%3E%3Cpath d='M100 20C106 33 106 41 100 49 94 41 94 33 100 20Z' transform='rotate(337.5 100 100)'/%3E%3C/g%3E%3C/svg%3E");
+  /* paisley corner vine, drawn for a top-left corner */
+  --orn-corner:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 34V14C1 6.8 6.8 1 14 1h20'/%3E%3Cpath d='M7 34V16c0-5 4-9 9-9h18'/%3E%3Cpath d='M13.5 13.5c4.4-1.6 8.2-.1 10.4 3.9-4.2 2-8.2.5-10.4-3.9Z'/%3E%3Cpath d='M13.5 13.5c-1.6 4.4-.1 8.2 3.9 10.4 2-4.2.5-8.2-3.9-10.4Z'/%3E%3Ccircle cx='11' cy='11' r='1.5' fill='%23c9a84c' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+  /* temple frieze - repeating lotus-petal band */
+  --orn-frieze:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='14' viewBox='0 0 44 14'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 13c-6-4-8-8.5-6.8-12.4C19.4 2 21.6 6.2 22 13Z'/%3E%3Cpath d='M22 13c6-4 8-8.5 6.8-12.4C24.6 2 22.4 6.2 22 13Z'/%3E%3Cpath d='M0 13h13M31 13h13'/%3E%3C/g%3E%3Ccircle cx='0' cy='13' r='1' fill='%23c9a84c'/%3E%3C/svg%3E");
+  /* paisley buti field - ambi curl plus a four-petal floret, textile repeat */
+  --orn-buti:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M52 26c16 4 25 19 21 34-3 12-15 20-27 17-10-3-15-13-11-22 3-7 12-10 18-6 5 3 6 10 2 14'/%3E%3Cpath d='M54 38c9 4 13 14 10 23-2 7-9 11-15 9'/%3E%3Ccircle cx='50' cy='22' r='1.5' fill='%23c9a84c' stroke='none'/%3E%3Cpath d='M100 92c-3-3.5-3-7 0-10.5 3 3.5 3 7 0 10.5Z'/%3E%3Cpath d='M100 92c3 3.5 3 7 0 10.5-3-3.5-3-7 0-10.5Z'/%3E%3Cpath d='M100 92c-3.5 3-7 3-10.5 0 3.5-3 7-3 10.5 0Z'/%3E%3Cpath d='M100 92c3.5-3 7-3 10.5 0-3.5 3-7 3-10.5 0Z'/%3E%3Ccircle cx='100' cy='92' r='1.3' fill='%23c9a84c' stroke='none'/%3E%3Cpath d='M16 98c-3-3.5-3-7 0-10.5 3 3.5 3 7 0 10.5Z'/%3E%3Cpath d='M16 98c3.5 3 3.5 7 0 10.5-3.5-3-3.5-7 0-10.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  /* temple arcade - repeating cusped arch skyline */
+  --orn-arcade:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='26' viewBox='0 0 44 26'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 26V15a22 11 0 0 1 44 0v11'/%3E%3Cpath d='M6 26v-9a16 8 0 0 1 32 0v9'/%3E%3Cpath d='M22 9c-2.4 3-2.4 6 0 9 2.4-3 2.4-6 0-9Z'/%3E%3Cpath d='M0 25.4h44'/%3E%3C/g%3E%3C/svg%3E");
+  /* running creeper (bel) - undulating vine with alternating leaves */
+  --orn-vine:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='26' viewBox='0 0 80 26'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 15q10-9 20 0t20 0t20 0t20 0'/%3E%3Cpath d='M10 10.5c-2.6-3.6-2.6-6.4 0-9 2.6 2.6 2.6 5.4 0 9Z'/%3E%3Cpath d='M50 10.5c-2.6-3.6-2.6-6.4 0-9 2.6 2.6 2.6 5.4 0 9Z'/%3E%3Cpath d='M30 19.5c2.6 3.6 2.6 6.4 0 9-2.6-2.6-2.6-5.4 0-9Z'/%3E%3Cpath d='M70 19.5c2.6 3.6 2.6 6.4 0 9-2.6-2.6-2.6-5.4 0-9Z'/%3E%3Ccircle cx='0' cy='15' r='1.2' fill='%23c9a84c' stroke='none'/%3E%3Ccircle cx='40' cy='15' r='1.2' fill='%23c9a84c' stroke='none'/%3E%3Ccircle cx='80' cy='15' r='1.2' fill='%23c9a84c' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+  /* woven twill grain */
+  --orn-twill:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' viewBox='0 0 9 9'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='.6'%3E%3Cpath d='M0 9 9 0M-1 1 1-1M8 10 10 8'/%3E%3C/g%3E%3C/svg%3E");
+  /* 9-slice manuscript frame: one corner + one edge run, mirrored/rotated in
+     place so border-image can paint all four sides correctly oriented */
+  --orn-frame9:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cdefs%3E%3Cg id='k' fill='none' stroke='%23c9a84c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 60V20C4 11.2 11.2 4 20 4h56'/%3E%3Cpath d='M13 60V25c0-6.6 5.4-12 12-12h47'/%3E%3Cpath d='M24 26c6.4-2.6 12 0 15.2 5.8C32.8 34.4 27 32 24 26Z'/%3E%3Cpath d='M24 26c-2.6 6.4 0 12 5.8 15.2C32.4 34.8 30 29 24 26Z'/%3E%3Ccircle cx='19.5' cy='19.5' r='2' fill='%23c9a84c' stroke='none'/%3E%3C/g%3E%3Cg id='e' fill='none' stroke='%23c9a84c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M60 4h60'/%3E%3Cpath d='M60 13h60'/%3E%3Cpath d='M90 13c3.2 4.4 3.2 8.2 0 12.6-3.2-4.4-3.2-8.4 0-12.6Z'/%3E%3Ccircle cx='72' cy='13' r='1.8' fill='%23c9a84c' stroke='none'/%3E%3Ccircle cx='108' cy='13' r='1.8' fill='%23c9a84c' stroke='none'/%3E%3C/g%3E%3C/defs%3E%3Cuse href='%23k'/%3E%3Cuse href='%23k' transform='translate(180,0) scale(-1,1)'/%3E%3Cuse href='%23k' transform='translate(0,180) scale(1,-1)'/%3E%3Cuse href='%23k' transform='translate(180,180) scale(-1,-1)'/%3E%3Cuse href='%23e'/%3E%3Cuse href='%23e' transform='translate(0,180) scale(1,-1)'/%3E%3Cuse href='%23e' transform='rotate(-90 90 90)'/%3E%3Cuse href='%23e' transform='rotate(90 90 90)'/%3E%3C/svg%3E");
+  /* three-petal tick used above the stat figures */
+  --orn-tick:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 12'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 11C11.3 8 11.3 4.5 14 1c2.7 3.5 2.7 7 0 10Z'/%3E%3Cpath d='M14 11C10 9.6 7.6 6.9 7.4 3.4 10.6 4.3 13 7 14 11Z'/%3E%3Cpath d='M14 11c4-1.4 6.4-4.1 6.6-7.6C17.4 4.3 15 7 14 11Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ---- inline <use> ornaments (lotus flourish, medallion, sprig) ---- */
+.orn{display:block;fill:none;stroke:var(--orn-ink);stroke-width:1;
+     pointer-events:none;flex:0 0 auto;max-width:100%;}
+
+/* lotus-and-vine flourish under headings */
+.orn-flourish{width:clamp(148px,24vw,208px);height:auto;opacity:.5;
+              margin:.35rem 0 .1rem;}
+.orn-flourish--center{margin-left:auto;margin-right:auto;}
+
+/* temple medallion separator between sections */
+.orn-rule{display:flex;align-items:center;justify-content:center;gap:.9rem;
+          width:100%;max-width:560px;margin-left:auto;margin-right:auto;
+          opacity:.45;pointer-events:none;}
+.orn-rule__line{flex:1 1 0;min-width:0;height:1px;
+                background:linear-gradient(to right,transparent,rgba(184,134,11,.5));}
+.orn-rule__line--flip{background:linear-gradient(to left,transparent,rgba(184,134,11,.5));}
+.orn-rule__mark{width:clamp(42px,7vw,58px);height:auto;}
+.orn-rule--top{margin-bottom:2.5rem;}
+.orn-rule--bottom{margin-top:3.25rem;}
+
+/* ---- decorative background layers -------------------------------------- */
+/* z-index:-1 keeps each layer behind its section's content but above the
+   section's own background, so nothing can ever cover text or controls. */
+/* isolation:isolate is load-bearing - it makes the section a stacking context
+   so the z-index:-1 layers below paint ABOVE the section's own background
+   (and still below every piece of content). Without it they are invisible. */
+.orn-sec{position:relative;overflow:hidden;isolation:isolate;}
+.gp-hero{isolation:isolate;}
+.sp-footer{isolation:isolate;overflow:hidden;}
+.orn-veil,.orn-mandala,.orn-sprig-wrap,.orn-band,.orn-border{position:absolute;
+  z-index:-1;pointer-events:none;-webkit-user-select:none;user-select:none;}
+
+/* --- full-bleed background fields ---------------------------------------- */
+.orn-veil{inset:0;background-repeat:repeat;}
+.orn-veil--jaali{background-image:var(--orn-jaali);background-size:52px 52px;opacity:.055;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 0%,transparent 78%);
+  mask-image:radial-gradient(120% 90% at 50% 0%,#000 0%,transparent 78%);}
+.orn-veil--jaali-soft{background-image:var(--orn-jaali);background-size:52px 52px;opacity:.05;
+  -webkit-mask-image:radial-gradient(85% 80% at 50% 50%,#000 0%,transparent 88%);
+  mask-image:radial-gradient(85% 80% at 50% 50%,#000 0%,transparent 88%);}
+/* paisley buti field - heritage textile repeat, kept faintest of all so the
+   product grid never has to compete with it */
+.orn-veil--buti{background-image:var(--orn-buti);background-size:120px 120px;opacity:.04;}
+.orn-veil--buti-soft{background-image:var(--orn-buti);background-size:120px 120px;opacity:.03;}
+/* fine 45 degree twill - reads as woven khadi grain rather than as a motif */
+.orn-veil--twill{background-image:var(--orn-twill);background-size:9px 9px;opacity:.05;}
+
+/* --- architectural edge bands -------------------------------------------- */
+.orn-band{left:0;right:0;background-repeat:repeat-x;}
+.orn-band--arcade{height:26px;background-image:var(--orn-arcade);
+  background-size:auto 26px;opacity:.13;}
+.orn-band--vine{height:26px;background-image:var(--orn-vine);
+  background-size:auto 26px;opacity:.14;}
+.orn-band--top{top:0;}
+.orn-band--bottom{bottom:0;}
+.orn-band--flip{transform:scaleY(-1);}
+
+/* --- 9-slice manuscript border frame -------------------------------------
+   One data URI paints all four corners plus the running edges, correctly
+   oriented, via border-image. Edges tile with `round` so it fits any size. */
+.orn-border{inset:clamp(12px,1.8vw,30px);opacity:.13;background:none;
+  border:clamp(28px,4vw,48px) solid transparent;
+  border-image-source:var(--orn-frame9);
+  border-image-slice:60;
+  border-image-repeat:round;}
+.orn-mandala{background:var(--orn-mandala) no-repeat center/contain;opacity:.07;}
+.orn-mandala--hero{width:clamp(240px,26vw,420px);aspect-ratio:1;
+  left:-9%;bottom:-24%;}
+.orn-mandala--hamper{width:clamp(280px,30vw,480px);aspect-ratio:1;
+  right:-8%;top:-16%;opacity:.05;}
+.orn-mandala--testi{width:clamp(220px,24vw,380px);aspect-ratio:1;
+  right:-6%;bottom:-18%;opacity:.06;}
+.orn-mandala--faq{width:clamp(320px,34vw,520px);aspect-ratio:1;
+  left:50%;top:52%;transform:translate(-50%,-50%);opacity:.05;}
+
+/* vertical botanical sprigs in the wide empty gutters beside the FAQ column */
+.orn-sprig-wrap{top:50%;transform:translateY(-50%);opacity:.22;}
+.orn-sprig-wrap--l{left:5.5%;}
+.orn-sprig-wrap--r{right:5.5%;transform:translateY(-50%) scaleX(-1);}
+.orn-sprig{width:clamp(30px,3vw,42px);height:auto;}
+
+/* ---- manuscript corner framing ----------------------------------------- */
+.orn-frame{position:relative;isolation:isolate;}
+.orn-frame::before,.orn-frame::after{content:"";position:absolute;z-index:-1;
+  width:clamp(26px,3.6vw,42px);aspect-ratio:1;pointer-events:none;
+  background:var(--orn-corner) no-repeat center/contain;opacity:.26;}
+.orn-frame::before{top:10px;left:10px;}
+.orn-frame::after{bottom:10px;right:10px;transform:scale(-1);}
+
+/* trust cards: one faint corner vine tucked into the empty lower-right */
+.gp-trust-card{position:relative;isolation:isolate;overflow:hidden;}
+.gp-trust-card::after{content:"";position:absolute;z-index:-1;
+  right:6px;bottom:6px;width:36px;height:36px;pointer-events:none;
+  background:var(--orn-corner) no-repeat center/contain;
+  transform:scale(-1);opacity:.16;}
+
+/* stat tiles: three-petal tick sitting inside the existing top padding */
+.orn-tile{position:relative;isolation:isolate;}
+.orn-tile::before{content:"";position:absolute;z-index:-1;
+  top:5px;left:50%;transform:translateX(-50%);
+  width:26px;height:11px;opacity:.35;pointer-events:none;
+  background:var(--orn-tick) no-repeat center/contain;}
+
+/* footer: slim temple frieze riding just under the existing top border */
+.sp-footer::before{content:"";position:absolute;top:0;left:0;right:0;height:14px;
+  background:var(--orn-frieze) repeat-x center top;background-size:44px 14px;
+  opacity:.3;pointer-events:none;}
+
+/* ---- responsive guards -------------------------------------------------- */
+@media (max-width:1279px){ .orn-sprig-wrap{display:none;} }
+@media (max-width:1023px){
+  .orn-border{inset:8px;border-width:clamp(24px,6vw,34px);opacity:.11;}
+}
+@media (max-width:768px){
+  .orn-flourish{width:clamp(132px,52vw,180px);}
+  .orn-rule--top{margin-bottom:1.75rem;}
+  .orn-rule--bottom{margin-top:2.25rem;}
+  .orn-mandala--hero{display:none;}
+  .orn-frame::before,.orn-frame::after{opacity:.2;}
+  .orn-tile::before{display:none;}
+  .gp-trust-card::after{width:28px;height:28px;opacity:.13;}
+  .orn-band--arcade,.orn-band--vine{height:18px;background-size:auto 18px;}
+  .orn-veil--buti,.orn-veil--buti-soft{background-size:92px 92px;}
+  .orn-border{inset:6px;border-width:22px;opacity:.1;}
+}
 </style>
 </head>
 <body class="antialiased selection:bg-[var(--sepia)] selection:text-[var(--void)]">
+
+<!-- ======= Heritage ornament sprite (decorative; referenced via <use>) ======= -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden">
+  <defs>
+    <!-- one half of the lotus flourish; mirrored at use-time -->
+    <g id="orn-vine">
+      <path d="M57 20C45 20.5 37 14.4 23 17.4"/>
+      <path d="M31 16.4c-3.5-5-9.5-6.6-14-4.6 3 5 9 6.6 14 4.6Z"/>
+      <path d="M23 17.4c-5 1-9-1-11-4"/>
+      <circle cx="9.6" cy="12.6" r="1.5" fill="currentColor" stroke="none"/>
+    </g>
+    <!-- lotus with twin vines -->
+    <symbol id="orn-lotus" viewBox="0 0 160 26">
+      <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M80 21C75.5 15 75.5 8.5 80 4c4.5 4.5 4.5 11 0 17Z"/>
+        <path d="M80 21c-7-4-11-9.5-11-15 5 1.5 9 6.5 11 15Z"/>
+        <path d="M80 21c7-4 11-9.5 11-15-5 1.5-9 6.5-11 15Z"/>
+        <path d="M80 21c-10-1-18-5-21-10.5 7 0 15 4 21 10.5Z"/>
+        <path d="M80 21c10-1 18-5 21-10.5-7 0-15 4-21 10.5Z"/>
+        <use href="#orn-vine"/>
+        <use href="#orn-vine" transform="translate(160,0) scale(-1,1)"/>
+      </g>
+    </symbol>
+    <!-- temple medallion for section separators -->
+    <symbol id="orn-medallion" viewBox="0 0 56 24">
+      <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M28 2 40 12 28 22 16 12Z"/>
+        <path d="M28 6.6 35 12l-7 5.4L21 12Z"/>
+        <circle cx="28" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+        <path d="M14 12H7"/><path d="M49 12h-7"/>
+        <circle cx="4.6" cy="12" r="1.3" fill="currentColor" stroke="none"/>
+        <circle cx="51.4" cy="12" r="1.3" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <!-- vertical botanical sprig -->
+    <symbol id="orn-sprig" viewBox="0 0 40 152">
+      <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 150c0-32-2-64 0-96 1-14 3-26 0-38"/>
+        <path d="M20 14c-4.5 6-4.5 13 0 19 4.5-6 4.5-13 0-19Z"/>
+        <path d="M20 33c-6-3-9.5-8-9.5-13.5 4.5 1.5 8 6 9.5 13.5Z"/>
+        <path d="M20 33c6-3 9.5-8 9.5-13.5-4.5 1.5-8 6-9.5 13.5Z"/>
+        <path d="M20 62c-4.5-4.6-11-5.6-16-3 4 5.6 10.5 7 16 3Z"/>
+        <path d="M20 85c4.5-4.6 11-5.6 16-3-4 5.6-10.5 7-16 3Z"/>
+        <path d="M20 108c-4.5-4.6-11-5.6-16-3 4 5.6 10.5 7 16 3Z"/>
+        <path d="M20 131c4.5-4.6 11-5.6 16-3-4 5.6-10.5 7-16 3Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 
 <!-- ===================== HEADER (exact markup from silverplay.in) ===================== -->
 <div class="sp-announce">
@@ -234,6 +444,9 @@ main>:last-child{margin-bottom:0 !important;}
 
   <!-- Hero -->
   <section class="gp-hero">
+    <div class="orn-veil orn-veil--jaali" aria-hidden="true"></div>
+    <div class="orn-mandala orn-mandala--hero" aria-hidden="true"></div>
+    <div class="orn-band orn-band--arcade orn-band--bottom" aria-hidden="true"></div>
     <div class="absolute -top-32 -right-32 w-[520px] h-[520px] rounded-full" style="background:rgba(184,134,11,.08);filter:blur(90px);pointer-events:none;"></div>
     <div class="relative sp-container pt-10 pb-16 lg:pb-20">
       <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase mb-10" style="color:rgba(232,213,183,.55);">
@@ -247,6 +460,7 @@ main>:last-child{margin-bottom:0 !important;}
           <h1 class="font-normal" style="font-family:var(--font-display);font-size:44px;line-height:1.2;color:var(--ivory);">
             Think Silver. Think Silver Play<br/><span class="italic" style="color:var(--sepia);font-family:var(--font-serif);">— The Ganpati Collection</span>
           </h1>
+          <svg class="orn orn-flourish" viewBox="0 0 160 26" aria-hidden="true" focusable="false"><use href="#orn-lotus"></use></svg>
           <p class="text-[18px] leading-relaxed max-w-xl" style="font-family:var(--font-serif);color:#C8B090;">
             Handcrafted in pure 925 Hallmarked Sterling Silver. Forged in ancient karigari traditions for Vinayaka Sthapana &amp; auspicious home sanctification.
           </p>
@@ -257,7 +471,7 @@ main>:last-child{margin-bottom:0 !important;}
         </div>
         <div class="lg:col-span-6 relative reveal reveal-right">
           <div class="relative rounded-lg overflow-hidden" style="border:1px solid var(--border-parch);box-shadow:0 12px 40px rgba(0,0,0,.8);">
-            <img alt="Pure 925 sterling silver Lord Ganesha idol and fluted modak" class="w-full h-auto object-cover max-h-[500px]" src="https://lh3.googleusercontent.com/aida/AEtjO1XILo90fl3sln-3yAJnr32arn7yevsvdOdAR5yHMgzEjmj5EXWPmTF94knvvmNTukocegYIKppN4nRE9oQp5ToX53KETz996gtDd5ao-IbppVGfrZtpb7cGJl9m3Wm-WDJcpTwYrVfCCxz-Vd1BBfwi09InlGqfIL5QVWCCTMOsdN6k2PH3LSNoJf2yin2_XGqGcSQi5XXgTEViw2A_eELJ0369jj7LTIkbJVnzGZlCjX0XCg_7YfQ_"/>
+            <img alt="Pure 925 sterling silver Lord Ganesha idol" class="w-full h-auto object-cover max-h-[500px]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMwkEuNg6URZKLMAbGvXf39E-6AU_-R-41apnfnRELd5wTqsOrrLIEHsbwH21dVmEac8-fHE7hIMv21IjYVa2kk5BNpOe_6f49iBMxC7T_9erk2iqPffGAGVmxSj56OGW3pbna0JRCISTRsMsfchgTTUQ50kZedeycSdK7awx4w0uXAs4Fa-Z0_XbEaT9F2E8cO79f_t_KPg0UhPnIjOTxUPWWBfcLqrOA6aL3gl4Wd9Xn2qxSOU0"/>
             <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3.5 rounded" style="background:rgba(32,22,11,.9);border:1px solid var(--border-parch);backdrop-filter:blur(6px);">
               <div class="flex items-center gap-2.5">
                 <span class="material-symbols-outlined text-[22px]" style="color:var(--sepia);">verified</span>
@@ -275,7 +489,10 @@ main>:last-child{margin-bottom:0 !important;}
   </section>
 
   <!-- Trust strip -->
-  <section style="background:#25190D;border-bottom:1px solid var(--border-parch);">
+  <section style="background:#25190D;border-bottom:1px solid var(--border-parch);" class="orn-sec">
+    <div class="orn-veil orn-veil--twill" aria-hidden="true"></div>
+    <div class="orn-band orn-band--vine orn-band--top" aria-hidden="true"></div>
+    <div class="orn-band orn-band--vine orn-band--bottom orn-band--flip" aria-hidden="true"></div>
     <div class="sp-container py-8">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="gp-trust-card reveal reveal-left"><div class="gp-trust-icon"><span class="material-symbols-outlined text-[22px]">verified_user</span></div><div><h4 class="text-[11px] tracking-[0.2em] font-semibold uppercase m-0" style="color:var(--sepia);">100% 925 BIS Hallmarked</h4><p class="text-[12px] mt-0.5 m-0" style="color:#C8B090;">Assayed purity with digital QR certificate</p></div></div>
@@ -287,11 +504,15 @@ main>:last-child{margin-bottom:0 !important;}
   </section>
 
   <!-- Catalog -->
-  <section class="sp-container py-16" id="collection-catalog">
+  <section class="sp-container py-16 orn-sec" id="collection-catalog">
+    <div class="orn-veil orn-veil--buti-soft" aria-hidden="true"></div>
+    <div class="orn-band orn-band--vine orn-band--bottom orn-band--flip" aria-hidden="true"></div>
+    <div class="orn-rule orn-rule--top reveal reveal-up" aria-hidden="true"><span class="orn-rule__line"></span><svg class="orn orn-rule__mark" viewBox="0 0 56 24" focusable="false"><use href="#orn-medallion"></use></svg><span class="orn-rule__line orn-rule__line--flip"></span></div>
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 pb-6" style="border-bottom:1px solid var(--border-parch);">
       <div class="flex flex-col gap-1.5 reveal reveal-left">
         <span class="tracking-[0.26em] uppercase font-semibold" style="color:var(--sepia);font-size:14px;">Devotional Karigari</span>
         <h2 class="font-normal m-0" style="font-family:var(--font-display);font-size:34px;color:var(--ivory);">Auspicious Sacred Silver Artifacts</h2>
+        <svg class="orn orn-flourish" viewBox="0 0 160 26" aria-hidden="true" focusable="false"><use href="#orn-lotus"></use></svg>
         <p class="max-w-xl m-0" style="color:#C8B090;font-size:16px;font-weight:500;">Authentic 925 hallmark creations for ceremonial sthapana, personal worship, and cherished festive gifts.</p>
       </div>
       <div class="tracking-wider uppercase reveal reveal-right" style="color:#C8B090;font-size:15px;"><span class="font-bold" style="color:var(--sepia);">28</span> Consecrated Pieces In Stock</div>
@@ -450,13 +671,17 @@ main>:last-child{margin-bottom:0 !important;}
       <div class="w-48 h-1 rounded-full overflow-hidden" style="background:#25190D;border:1px solid var(--border-parch);"><div class="w-1/3 h-full" style="background:var(--sepia);"></div></div>
       <button class="btn btn-outline" type="button">Load More Creations</button>
     </div>
+    <div class="orn-rule orn-rule--bottom reveal reveal-up" aria-hidden="true"><span class="orn-rule__line"></span><svg class="orn orn-rule__mark" viewBox="0 0 56 24" focusable="false"><use href="#orn-medallion"></use></svg><span class="orn-rule__line orn-rule__line--flip"></span></div>
   </section>
 
   <!-- Bespoke Hamper -->
-  <section style="background:#25190D;border-top:1px solid var(--border-parch);border-bottom:1px solid var(--border-parch);" class="py-20" id="hamper-spotlight">
+  <section style="background:#25190D;border-top:1px solid var(--border-parch);border-bottom:1px solid var(--border-parch);" class="py-20 orn-sec" id="hamper-spotlight">
+    <div class="orn-veil orn-veil--buti" aria-hidden="true"></div>
+    <div class="orn-mandala orn-mandala--hamper" aria-hidden="true"></div>
+    <div class="orn-border" aria-hidden="true"></div>
     <div class="sp-container">
       <div class="relative rounded-xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12" style="background:var(--void);border:1px solid rgba(184,134,11,.3);">
-        <div class="lg:col-span-7 p-8 lg:p-14 flex flex-col justify-between relative z-10 reveal reveal-left">
+        <div class="lg:col-span-7 p-8 lg:p-14 flex flex-col justify-between relative z-10 orn-frame reveal reveal-left">
           <div class="flex flex-col gap-4">
             <div class="flex items-center gap-3">
               <span class="px-2.5 py-1 text-[10px] font-bold tracking-[0.2em] uppercase" style="background:var(--sepia);color:var(--void);">Festive Bespoke Curation</span>
@@ -492,9 +717,12 @@ main>:last-child{margin-bottom:0 !important;}
   </section>
 
   <!-- Testimonial -->
-  <section class="sp-container py-20">
+  <section class="sp-container py-20 orn-sec">
+    <div class="orn-veil orn-veil--jaali-soft" aria-hidden="true"></div>
+    <div class="orn-mandala orn-mandala--testi" aria-hidden="true"></div>
+    <div class="orn-border" aria-hidden="true"></div>
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-      <div class="lg:col-span-7 p-8 lg:p-12 rounded shadow-xl relative reveal reveal-left" style="background:#25190D;border:1px solid var(--border-parch);">
+      <div class="lg:col-span-7 p-8 lg:p-12 rounded shadow-xl relative orn-frame reveal reveal-left" style="background:#25190D;border:1px solid var(--border-parch);">
         <span class="material-symbols-outlined text-[44px]" style="color:rgba(184,134,11,.3);">format_quote</span>
         <div class="flex items-center gap-1 my-3" style="color:var(--sepia);">
           <span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span><span class="material-symbols-outlined text-[18px]" style="font-variation-settings:'FILL' 1;">star</span>
@@ -512,24 +740,32 @@ main>:last-child{margin-bottom:0 !important;}
         <div class="flex flex-col gap-2">
           <span class="text-[11px] tracking-[0.24em] uppercase font-semibold" style="color:var(--sepia);">Uncompromising Reverence</span>
           <h3 class="font-normal m-0" style="font-family:var(--font-display);font-size:28px;color:var(--ivory);">Sanctity Sealed in Pure Silver</h3>
+          <svg class="orn orn-flourish" viewBox="0 0 160 26" aria-hidden="true" focusable="false"><use href="#orn-lotus"></use></svg>
           <p class="text-[13px] leading-relaxed" style="color:#C8B090;">Each artifact is fashioned according to Shilpa Shastra proportions, ensuring balanced spiritual iconography and generational durability.</p>
         </div>
         <div class="grid grid-cols-3 gap-4 pt-2">
-          <div class="flex flex-col p-4 rounded text-center" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">50,000+</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">Idols Delivered</span></div>
-          <div class="flex flex-col p-4 rounded text-center" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">100%</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">BIS Hallmarked</span></div>
-          <div class="flex flex-col p-4 rounded text-center" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">4.9/5</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">Trust Rating</span></div>
+          <div class="flex flex-col p-4 rounded text-center orn-tile" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">50,000+</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">Idols Delivered</span></div>
+          <div class="flex flex-col p-4 rounded text-center orn-tile" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">100%</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">BIS Hallmarked</span></div>
+          <div class="flex flex-col p-4 rounded text-center orn-tile" style="background:#25190D;border:1px solid var(--border-parch);"><span class="font-medium" style="font-family:var(--font-display);font-size:22px;color:var(--sepia);">4.9/5</span><span class="text-[10px] tracking-widest uppercase mt-1" style="color:#C8B090;">Trust Rating</span></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section style="background:#25190D;border-top:1px solid var(--border-parch);" class="py-20">
+  <section style="background:#25190D;border-top:1px solid var(--border-parch);" class="py-20 orn-sec">
+    <div class="orn-veil orn-veil--twill" aria-hidden="true"></div>
+    <div class="orn-mandala orn-mandala--faq" aria-hidden="true"></div>
+    <div class="orn-band orn-band--arcade orn-band--top orn-band--flip" aria-hidden="true"></div>
+    <div class="orn-border" aria-hidden="true"></div>
+    <div class="orn-sprig-wrap orn-sprig-wrap--l" aria-hidden="true"><svg class="orn orn-sprig" viewBox="0 0 40 152" focusable="false"><use href="#orn-sprig"></use></svg></div>
+    <div class="orn-sprig-wrap orn-sprig-wrap--r" aria-hidden="true"><svg class="orn orn-sprig" viewBox="0 0 40 152" focusable="false"><use href="#orn-sprig"></use></svg></div>
     <div class="max-w-[840px] mx-auto px-6 flex flex-col gap-10">
       <div class="text-center flex flex-col gap-2 reveal reveal-up">
         <span class="text-[11px] tracking-[0.24em] uppercase font-semibold" style="color:var(--sepia);">Reassurance &amp; Delivery</span>
         <h2 class="font-normal m-0" style="font-family:var(--font-display);font-size:32px;color:var(--ivory);">Frequently Asked Questions</h2>
         <p class="text-[13px] m-0" style="color:#C8B090;">Silver authentication, doorstep delivery timelines, and ceremonial purity.</p>
+        <svg class="orn orn-flourish orn-flourish--center" viewBox="0 0 160 26" aria-hidden="true" focusable="false"><use href="#orn-lotus"></use></svg>
       </div>
       <div class="flex flex-col gap-3" id="faq-accordion">
         <div class="gp-faq-card reveal reveal-up"><button class="gp-faq-toggle" type="button"><span style="font-family:var(--font-serif);font-size:18px;">How long does delivery take?</span><span class="material-symbols-outlined gp-faq-icon rot">expand_more</span></button><div class="px-5 pb-5"><p class="text-[13px] leading-relaxed m-0" style="color:#C8B090;">All festival orders are routed through prioritized air express couriers with comprehensive transit insurance. Orders are typically dispatched within 24 hours, with guaranteed delivery within 2–4 business days, well before the Vinayaka Sthapana muhurat.</p></div></div>
@@ -545,6 +781,7 @@ main>:last-child{margin-bottom:0 !important;}
 
 <!-- ===================== FOOTER (exact markup from silverplay.in) ===================== -->
 <footer class="sp-footer">
+  <div class="orn-veil orn-veil--buti-soft" aria-hidden="true"></div>
   <div class="sp-container">
     <div class="sp-footer__grid">
       <div>
