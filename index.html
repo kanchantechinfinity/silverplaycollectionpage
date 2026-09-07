@@ -121,6 +121,24 @@ main>:last-child{margin-bottom:0 !important;}
 
 /* ===== Page-specific styling (Ganpati Collection content) ===== */
 .gp-hero{position:relative;overflow:hidden;background:var(--void);border-bottom:1px solid var(--border-parch);}
+
+/* ---- Ganpati Festive Offer Banner ---- */
+.gp-promo{position:relative;overflow:hidden;background:linear-gradient(120deg,#2c1a0e 0%,#3a230f 55%,#2c1a0e 100%);border-bottom:2px solid var(--sepia);}
+.gp-promo::before,.gp-promo::after{content:'✦';position:absolute;top:50%;transform:translateY(-50%);font-size:120px;color:rgba(184,134,11,.06);pointer-events:none;font-family:var(--font-display);}
+.gp-promo::before{left:-20px;}
+.gp-promo::after{right:-20px;}
+.gp-promo__inner{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.5rem 2.5rem;padding:1.1rem 2.5rem;max-width:1400px;margin:0 auto;text-align:center;}
+.gp-promo__icon{width:52px;height:52px;border-radius:50%;background:rgba(184,134,11,.15);border:1px solid rgba(184,134,11,.45);display:flex;align-items:center;justify-content:center;color:var(--sepia);flex-shrink:0;font-size:28px;}
+.gp-promo__text{display:flex;flex-direction:column;gap:.2rem;}
+.gp-promo__headline{font-family:var(--font-display);font-size:17px;letter-spacing:.03em;color:var(--ivory);font-weight:700;}
+.gp-promo__headline b{color:var(--sepia);}
+.gp-promo__sub{font-family:var(--font-serif);font-size:14.5px;color:#D8C4A6;font-weight:500;}
+.gp-promo__end{font-family:var(--font-display);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#b8860b;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.35);padding:.35rem .8rem;border-radius:999px;white-space:nowrap;}
+@media (max-width:768px){
+  .gp-promo__inner{padding:1rem 1.25rem;gap:.9rem;flex-direction:column;text-align:center;}
+  .gp-promo__headline{font-size:15px;}
+  .gp-promo::before,.gp-promo::after{display:none;}
+}
 .gp-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1.1rem;border-radius:999px;border:1px solid rgba(184,134,11,.4);background:rgba(184,134,11,.1);color:var(--sepia);font-family:var(--font-display);font-size:10px;letter-spacing:.22em;text-transform:uppercase;}
 .gp-trust-card{display:flex;align-items:center;gap:.9rem;padding:1.1rem;border-radius:6px;background:#25190D;border:1px solid var(--border-parch);}
 .gp-trust-icon{width:50px;height:50px;border-radius:50%;background:rgba(184,134,11,.12);border:1px solid rgba(184,134,11,.3);display:flex;align-items:center;justify-content:center;color:var(--sepia);flex-shrink:0;}
@@ -392,7 +410,7 @@ main>:last-child{margin-bottom:0 !important;}
 
 <!-- ===================== HEADER (exact markup from silverplay.in) ===================== -->
 <div class="sp-announce">
-  <p>✦ BIS CERTIFIED <span class="text-[rgba(184,134,11,.4)]">✦</span> SAVINGS WITH EVERY PURCHASE <span class="text-[rgba(184,134,11,.4)]">✦</span> THE SILVER PLAY EXCHANGE POLICY <span class="text-[rgba(184,134,11,.4)]">✦</span> 🇮🇳 ARTISAN CRAFTED IN INDIA <span class="text-[rgba(184,134,11,.4)]">✦</span> FREE SHIPPING ON PREPAID ORDERS</p>
+  <p><span id="sp-announce-offer" style="display:none;">🐘 GANPATI OFFER: BUY ₹15,000+ &amp; GET A FREE SILVER GANPATI COIN <span class="text-[rgba(184,134,11,.4)]">✦</span></span> BIS CERTIFIED <span class="text-[rgba(184,134,11,.4)]">✦</span> SAVINGS WITH EVERY PURCHASE <span class="text-[rgba(184,134,11,.4)]">✦</span> THE SILVER PLAY EXCHANGE POLICY <span class="text-[rgba(184,134,11,.4)]">✦</span> 🇮🇳 ARTISAN CRAFTED IN INDIA <span class="text-[rgba(184,134,11,.4)]">✦</span> FREE SHIPPING ON PREPAID ORDERS</p>
 </div>
 
 <header class="sp-header" id="sp-header">
@@ -438,6 +456,19 @@ main>:last-child{margin-bottom:0 !important;}
     </nav>
   </div>
 </header>
+
+<!-- ===================== GANPATI FESTIVE OFFER BANNER (auto-hides after campaign end) ===================== -->
+<div class="gp-promo" id="gp-promo-banner" data-campaign-end="2026-09-25T23:59:59+05:30" style="display:none;">
+  <div class="gp-promo__inner">
+    <div class="gp-promo__icon"><span class="material-symbols-outlined">celebration</span></div>
+    <div class="gp-promo__text">
+      <span class="gp-promo__headline">🐘 Ganpati Bappa Morya — Buy for <b>₹15,000</b> or above &amp; get a <b>FREE Silver Ganpati Coin</b></span>
+      <span class="gp-promo__sub">Sacred, complimentary &amp; automatically added at checkout on qualifying orders.</span>
+    </div>
+    <span class="gp-promo__end" id="gp-promo-countdown">Offer valid till 25th September (Ganpati Visarjan)</span>
+    <a href="#collection-catalog" class="btn btn-gold" style="padding:.65rem 1.5rem;">Shop The Offer</a>
+  </div>
+</div>
 
 <main>
 <div class="flex flex-col w-full">
@@ -811,6 +842,33 @@ main>:last-child{margin-bottom:0 !important;}
 </footer>
 
 <script>
+  // ---- Ganpati Festive Offer: auto show/hide by campaign window ----
+  // Runs from publish date through 25 Sept 2026 (Ganpati Visarjan), IST end-of-day.
+  // After that date this block leaves the banner + announcement offer text hidden — no manual takedown needed.
+  (function(){
+    const banner = document.getElementById('gp-promo-banner');
+    const announceOffer = document.getElementById('sp-announce-offer');
+    if (!banner) return;
+    const endStr = banner.getAttribute('data-campaign-end'); // 2026-09-25T23:59:59+05:30
+    const end = new Date(endStr);
+    const now = new Date();
+    if (now <= end) {
+      banner.style.display = 'block';
+      if (announceOffer) announceOffer.style.display = 'inline-flex';
+      const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
+      const countdownEl = document.getElementById('gp-promo-countdown');
+      if (countdownEl && daysLeft <= 7) {
+        countdownEl.textContent = daysLeft <= 0
+          ? 'Last day — offer ends tonight!'
+          : `Only ${daysLeft} day${daysLeft === 1 ? '' : 's'} left — ends 25th Sept (Visarjan)`;
+      }
+    } else {
+      banner.style.display = 'none';
+      banner.remove();
+      if (announceOffer) announceOffer.remove();
+    }
+  })();
+
   // Scroll-triggered fade/slide reveal
   const revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
